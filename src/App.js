@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import CardView from './CardView';
 import AddCardForm from './AddCardForm';
 import './App.css';
 
 function App() {
+
+  const isCardSaved = useSelector(state => state.card.cardSaved);
 
   const [name, setName] = useState('John Doe');
   const [cardNumber, setCardNumber] = useState('1234123412341234');
@@ -11,6 +14,7 @@ function App() {
   const [month, setMonth] = useState('10');
   const [year, setYear] = useState('22');
   const [CVV, setCVV] = useState('123');
+  const [notification, setNotification] = useState(false);
 
   const months = {
     "january": 1,
@@ -35,6 +39,12 @@ function App() {
     "2025": 25,
   }
 
+  useEffect(() => {
+    if(isCardSaved){
+      setNotification(true);
+    }
+  })
+
   const handleNumberChange = (number) => {
     setCardNumber(number);
   }
@@ -54,6 +64,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1 className="homepage__title">Add New Card</h1>
+        {notification ? <p>Card Saved!</p> : null}
       </header>
       <section className="card">
       <CardView  name={name} cardNumber={cardNumber} cardType={cardType} month={month} year={year} CVV={CVV} />

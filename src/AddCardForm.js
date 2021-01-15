@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { saveCardData } from './store/actions/card';
 import './AddCardForm.css';
 
 const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChange, handleYearChange, setCVV }) => {
+
+    const dispatch = useDispatch(); // Redux hook for dispatching actions
 
     const [newName, setNewName] = useState('John Doe');
     const [newCardNumber, setNewCardNumber] = useState(1234123412341234);
@@ -35,7 +38,15 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
 
     const handleSave = (e) => {
         e.preventDefault();
-        console.log('save');
+        const cardData = {
+            newName,
+            newCardNumber,
+            newCardType,
+            newMonth,
+            newYear,
+            newCVV
+        }
+        dispatch((saveCardData(cardData))); // save card details POST API call
     }
 
     const handleNewNameChange = (e) => {
@@ -72,7 +83,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
         <div className="add-cc">
             <form className="add-cc__credit-card">
                 <div className="add-cc__form-header">
-                    <h2 className="add-cc__title2">New Credit Card</h2>
+                    <h2 className="add-cc__title2">Add New Credit Card</h2>
                 </div>
 
                 <div className="add-cc__form-body">
