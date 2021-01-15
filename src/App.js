@@ -26,26 +26,26 @@ function App() {
   const [notification, setNotification] = useState(false);
 
   const months = {
-    "january": 1,
-    "february": 2,
-    "march": 3,
-    "april": 4,
-    "may": 5,
-    "june": 6,
-    "july": 7,
-    "august": 8,
-    "september": 9,
-    "october": 10,
-    "november": 11,
-    "december": 12,
+    "january": "1",
+    "february": "2",
+    "march": "3",
+    "april": "4",
+    "may": "5",
+    "june": "6",
+    "july": "7",
+    "august": "8",
+    "september": "9",
+    "october": "10",
+    "november": "11",
+    "december": "12",
   }
 
   const years = {
-    "2021": 21,
-    "2022": 22,
-    "2023": 23,
-    "2024": 24,
-    "2025": 25,
+    "2021": "21",
+    "2022": "22",
+    "2023": "23",
+    "2024": "24",
+    "2025": "25",
   }
 
   useEffect(() => {

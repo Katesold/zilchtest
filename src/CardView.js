@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './CardView.css';
 
 const CardView = ({ name, cardNumber, cardType, month, year, CVV }) => {
@@ -31,6 +32,15 @@ const CardView = ({ name, cardNumber, cardType, month, year, CVV }) => {
             </div>
 
         </div>);
+}
+
+CardView.propTypes  = {
+    name: PropTypes.string, 
+    cardNumber: PropTypes.string, 
+    cardType: PropTypes.string, 
+    month: PropTypes.string,
+    year: PropTypes.string, 
+    CVV: PropTypes.string, 
 }
 
 export default CardView;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import './AddCardForm.css';
 
 const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChange, handleYearChange, setCVV, handleSave }) => {
@@ -10,9 +11,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
 
     // warning for user if card number includes string values
     useEffect(() => {
-        const copyOfCardNo = newCardNumber;
-        const testIfNumber = Number(copyOfCardNo);
-        if (newCardNumber.length > 16 || Number.isNaN(testIfNumber)) {
+        if (newCardNumber.length > 16) {
             setIsInvalid(true);
         } else {
             setIsInvalid(false);
@@ -48,7 +47,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
                 </div>
                 <div className="add-cc__form-body">
                     <input type="text" className="add-cc__name" placeholder="John Doe" onChange={(e) => setName(e.target.value)}></input>
-                    <input type="text" className="add-cc__card-number" placeholder="Card Number" onChange={handleNewNumberChange}></input>
+                    <input type="number" className="add-cc__card-number" maxLength="16" placeholder="Card Number" onChange={handleNewNumberChange}></input>
                     {isInvalid ? <p className="invalid">Invalid! 16 digits required</p> : null}
                     <div className="add-cc__date-field">
                         <div className="add-cc__month">
@@ -80,7 +79,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
 
                     <div className="add-cc__verification">
                         <div className="add-cc__cvv">
-                            <input type="text" placeholder="CVV" onChange={handleNewCVVChange}></input>
+                            <input type="number" placeholder="CVV" maxLength="3" onChange={handleNewCVVChange}></input>
                             {isInvalidCVV ? <p className="add-cc__cvv-details alert">3 digits at the back</p> : <p className="add-cc__cvv-details">3 digits at the back</p> }
                         </div>
                         <div className="add-cc__type">
@@ -96,6 +95,16 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
             </form>
         </div>
     );
+}
+
+AddCardForm.propTypes  = {
+    setName: PropTypes.func.isRequired, 
+    handleNumberChange: PropTypes.func.isRequired, 
+    setCardType: PropTypes.func.isRequired, 
+    handleMonthChange: PropTypes.func.isRequired, 
+    handleYearChange: PropTypes.func.isRequired, 
+    setCVV: PropTypes.func.isRequired, 
+    handleSave: PropTypes.func.isRequired,
 }
 
 export default AddCardForm;
