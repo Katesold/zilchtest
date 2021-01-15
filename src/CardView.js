@@ -6,7 +6,7 @@ const CardView = ({ name, cardNumber, cardType, month, year, CVV }) => {
     const [displayNumber, setDisplayNumber] = useState('1234 1234 1234 1234');
 
     useEffect(() => {
-        const formattedNums = [...cardNumber].map((d, i) => (i) % 4 == 0 ? ' ' + d : d).join('').trim();
+        const formattedNums = [...cardNumber].map((d, i) => (i) % 4 === 0 ? ' ' + d : d).join('').trim();
         setDisplayNumber(formattedNums);
     }, [cardNumber])
 

@@ -5,6 +5,7 @@ import {
 } from '../types';
 import { apiCall } from '../../utils';
 
+// async call uses thunk
 export const saveCardData = (cardData) => (dispatch, getState) => {
     dispatch({ type: CARD_SAVE_REQUEST });
     return apiCall({
