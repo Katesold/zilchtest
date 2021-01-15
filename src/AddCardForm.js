@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './AddCardForm.css';
 
 const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChange, handleYearChange, setCVV, handleSave }) => {
 
-    const [newCardNumber, setNewCardNumber] = useState(1234123412341234);
+    const [newCardNumber, setNewCardNumber] = useState('1234123412341234');
     const [isInvalid, setIsInvalid] = useState(false);
     const [isInvalidCVV, setIsInvalidCVV] = useState(false);
     const [newCVV, setNewCVV] = useState(0);
+    const prevCardNumber = useRef("");
+    const numberRegex = new RegExp('^[0-9]+$');
 
     // warning for user if card number includes string values
     useEffect(() => {
-        if (newCardNumber.length > 16) {
+        const copyOfCardNo = newCardNumber;
+        const testIfNumber = Number(copyOfCardNo);
+        if (newCardNumber.length > 16 || Number.isNaN(testIfNumber)) {
             setIsInvalid(true);
         } else {
             setIsInvalid(false);
@@ -20,8 +24,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
 
     // warning for user if CVV includes string values
     useEffect(() => {
-        const copyOfCVV = newCVV;
-        const testIfNumber = Number(copyOfCVV);
+        const testIfNumber = Number(newCVV);
         if (newCVV.length > 3 || Number.isNaN(testIfNumber)) {
             setIsInvalidCVV(true);
         } else {
@@ -30,8 +33,15 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
     }, [newCVV]);
 
     const handleNewNumberChange = (e) => {
-        setNewCardNumber(e.target.value);
-        handleNumberChange(e.target.value);
+        if (e.target.value === "" || numberRegex.test(e.target.value)) {
+            prevCardNumber.current = e.target.value;
+            setNewCardNumber(e.target.value);
+            handleNumberChange(e.target.value);
+            return;
+        } 
+        setNewCardNumber(prevCardNumber.current);
+        e.preventDefault();
+        return false;
     }
 
     const handleNewCVVChange = (e) => {
@@ -47,7 +57,7 @@ const AddCardForm = ({ setName, handleNumberChange, setCardType, handleMonthChan
                 </div>
                 <div className="add-cc__form-body">
                     <input type="text" className="add-cc__name" placeholder="John Doe" onChange={(e) => setName(e.target.value)}></input>
-                    <input type="number" className="add-cc__card-number" maxLength="16" placeholder="Card Number" onChange={handleNewNumberChange}></input>
+                    <input type="text" className="add-cc__card-number" maxLength="16" placeholder="Card Number" onChange={handleNewNumberChange} value={newCardNumber}></input>
                     {isInvalid ? <p className="invalid">Invalid! 16 digits required</p> : null}
                     <div className="add-cc__date-field">
                         <div className="add-cc__month">

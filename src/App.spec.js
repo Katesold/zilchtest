@@ -34,6 +34,5 @@ test('renders App main component', () => {
 
   const addedElement = screen.queryByText('Card Saved!');
   expect(addedElement).toBe(null);
-
-  fireEvent.click(screen.getByText('Save'))
+  
 });
